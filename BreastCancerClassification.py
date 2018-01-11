@@ -38,8 +38,8 @@ df.info()
 df.dtypes
 df.isnull().any()
 
-#It appears that there is a column 'Unnamed: 32' that contains only NaN values so I will just drop this
-df = df.drop(['Unnamed: 32'],axis=1)
+#It appears that there is a column 'Unnamed: 32' that contains only NaN values so I will just drop this as well as the cell id
+df = df.drop(['Unnamed: 32','id'],axis=1)
 
 #I also will convert the 'diagnosis' column from objects to categorical data
 df['diagnosis'] = df['diagnosis'].astype('category')
@@ -128,7 +128,7 @@ plt.title('Correlations of New Features')
 
 #Models:
 #1. Logistic Regression
-#2. Support Vector Classifier
+#2. Support Vector Machine
 #3. K-Nearest Neighbor
 #4. Gaussian Naive Bayes
 #5. Random Forest
@@ -147,7 +147,6 @@ y_noPCA = y
 acc = []
 classifier = []
 PCA_Ind = []
-
 for i in range(0,100):
     #Setting up training and test sets
     X_train, X_test, y_train, y_test = train_test_split(X,y,random_state=i)
@@ -168,19 +167,19 @@ for i in range(0,100):
     classifier.append('Logistic Regression')
     PCA_Ind.append('No')
     
-    #Support Vector Classifier
+    #Support Vector Machine
     svc = SVC()
     svc.fit(X_train,y_train)
     y_pred = svc.predict(X_test)
     acc.append(svc.score(X_train,y_train)*100)
-    classifier.append('Support Vector Classifier')
+    classifier.append('Support Vector Machine')
     PCA_Ind.append('Yes')
     
-    #Support Vector Classifier w/o PCA
+    #Support Vector Machine w/o PCA
     svc.fit(X_train_noPCA,y_train_noPCA)
     y_pred_noPCA = svc.predict(X_test_noPCA)
     acc.append(svc.score(X_train_noPCA,y_train_noPCA)*100)
-    classifier.append('Support Vector Classifier')
+    classifier.append('Support Vector Machine')
     PCA_Ind.append('No')
     
     #K-Nearest Neighbors
